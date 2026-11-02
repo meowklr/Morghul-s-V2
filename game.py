@@ -3,42 +3,39 @@ from utils import *
 
 #lancement du jeu
 def launcher():
-# message de bienvenue
-    print("Bienvenue sur Morghul's V2 !")
-# choisir parmis 1-lancer le jeu, 2-consulter le leaderboard, 3-quitter
-    print("\n+------------------------------------+")
-    print("|        BIENVENUE SUR LE JEU        |")
-    print("+------------------------------------+")
-    print("| [1]  Demarrer le jeu               |")
-    print("| [2]  Voir les scores               |")
-    print("| [3]  Quitter                       |")
-    print("+------------------------------------+")
-    choice = input("Choix : ")
+    # message de bienvenue
+    display_launcher()
+    # choisir parmis 1-lancer le jeu, 2-consulter le leaderboard, 3-quitter
+    choice = input("Veuillez entrer votre choix, qui doit être un nombre compris entre 1 et 3 : ")
+    #tant que le choix est invalide on réessaie
+    while not choice_is_valid(choice, 1, 3):
+        #redemander
+        choice = input("Choix : ")
     #si le choix est valide on le retourne pour l'utiliser
-    if choice_is_valid(choice, 1, 3):
-        return choice
-    #si le choix est invalide on redemande en renvoyant une erreur
-    else : 
-        print("Choix invalide, réessayez.")
-        launcher()
+    return choice
 
-
-# redemander tant que le choix n'est pas valide
 
 #pseudo du joueur
-# demander le pseudo
-# redemander tant que le pseudo est invalide
+def set_nickname():
+    # demander le pseudo et recup le choix
+    nickname = input("Quel est votre pseudo ?")
+    #tant que le pseudo est invalide on redemande
+    while not name_is_valid(nickname, 3, 13):
+        #redemander le pseudo
+        nickname = input("Quel est votre pseudo ?")
+    #si valide on le retourne pour l'utiliser
+    return nickname
 
-#name_is_valid(min, max)
-# chaine de caractere
-#  sinon retoruner false
-# compris entre 3 et 12 caracteres
-#  sinon retourner false
-# retourner true
 
 #selection de trois personnages parmis tous
-#tant que l'equipe n'est pas au complet
-# afficher la lsite des personnages disponibles et leurs stats
+def build_team():
+    #créer la liste team et la taille voulue
+    team = []
+    team_lenght = 3
+    #tant que l'equipe n'est pas au complet
+    while len(team) < team_lenght :
+    # afficher la liste des personnages disponibles et leurs stats avec fonction display_heroes()
+        display_heroes()
 # demander au joueur le nombre correspondant au personnage souhaité
 # redemander tant que le nombre est invalide
 # ajouter le personnage a l'equipe et le retirer de la liste des persos dispos
