@@ -1,0 +1,90 @@
+from pymongo import MongoClient
+from models import Character
+
+def get_db():
+    client = MongoClient("mongodb://localhost:27017/MONGO_")
+    db = client["game_db"]
+    return db
+
+def get_all_heroes():
+    #recuperer les heros
+    #en faire des objets Hero
+    db = get_db()
+    heroes_dict = list(db["heroes"].find({}, {"_id": 0}))
+    return [Character(**hero) for hero in heroes_dict] 
+
+def get_all_monsters():
+    #recup els monstres
+    #en faire des objets Monstre
+    db = get_db()
+    monsters_dict = list(db["monsters"].find({}, {"_id": 0}))
+    return [Character(**monster) for monster in monsters_dict]  
+
+"""def get_all_bonuses():
+    #recuperer les bonus de la db
+    #en faire des objets Bonus
+    db = get_db()
+    bonuses_dict = list(db["bonuses"].find({}, {"_id": 0}))
+    return [Bonus(**bonus) for bonus in bonuses_dict]"""
+
+def insert_heroes():
+    heroes_list=get_db()["heroes"]
+    heroes_list.insert_many([
+        {"name": "Kaelis Forgefer", "attack": 15, "defense": 10, "hp": 100, "max_hp": 100},
+        {"name": "Lysandra l’Archimage", "attack": 20, "defense": 5, "hp": 80, "max_hp": 80},
+        {"name": "Faelan Flèche-Sylve", "attack": 18, "defense": 7, "hp": 90, "max_hp": 90},
+        {"name": "Nyssa l’Insaisissable", "attack": 22, "defense": 8, "hp": 85, "max_hp": 85},
+        {"name": "Sigrid Lame-d’Acier", "attack": 14, "defense": 12, "hp": 110, "max_hp": 110},
+        {"name": "Azrael Ombrefoutre", "attack": 25, "defense": 3, "hp": 70, "max_hp": 70},
+        {"name": "Tharion le Colosse", "attack": 17, "defense": 15, "hp": 120, "max_hp": 120},
+        {"name": "Elowen la Pure", "attack": 19, "defense": 9, "hp": 95, "max_hp": 95},  # Moine
+        {"name": "Graven Brisecrâne", "attack": 23, "defense": 6, "hp": 105, "max_hp": 105},
+        {"name": "Rowan Feuillombre", "attack": 16, "defense": 11, "hp": 100, "max_hp": 100},
+        {"name": "Morghul Apocalypse", "attack": 50, "defense": 50, "hp": 200, "max_hp": 200}
+    ])
+
+def insert_monsters():
+    monsters_list=get_db()["monsters"]
+    monsters_list.insert_many([
+        {"name": "Gobelin", "attack": 10, "defense": 5, "hp": 50, "max_hp": 50},
+        {"name": "Orc", "attack": 20, "defense": 8, "hp": 120, "max_hp": 120},
+        {"name": "Dragon", "attack": 35, "defense": 20, "hp": 300, "max_hp": 300},
+        {"name": "Zombie", "attack": 12, "defense": 6, "hp": 70, "max_hp": 70},
+        {"name": "Troll", "attack": 25, "defense": 15, "hp": 200, "max_hp": 200},
+        {"name": "Spectre", "attack": 18, "defense": 10, "hp": 100, "max_hp": 100},
+        {"name": "Golem", "attack": 30, "defense": 25, "hp": 250, "max_hp": 250},
+        {"name": "Vampire", "attack": 22, "defense": 12, "hp": 150, "max_hp": 150},
+        {"name": "Loup-garou", "attack": 28, "defense": 18, "hp": 180, "max_hp": 180},
+        {"name": "Squelette", "attack": 15, "defense": 7, "hp": 90, "max_hp": 90}
+    ])
+
+def insert_bonuses():
+    bonuses_list=get_db()["bonuses"]
+    bonuses_list.insert_many([
+        {"name": "Potion de vie", "description": "Restaure complètement la vie d'un de vos héros aléatoire", "effect": "heal"},
+        {"name": "Potion de force", "description": "Augmente l'attaque de 10 points à l'un de vos héros aléatoire", "effect": "increase_attack"},
+        {"name": "Potion de défense", "description": "Augmente la défense de 10 points à l'un de vos héros aléatoire", "effect": "increase_defense"}
+    ])
+
+
+def add_to_leaderboard(name, count, team):
+    #recup db
+    #ajouter l'entrée leaderboard avec les categories nom compteur et equipe
+    db = get_db()
+    leaderboard = db["leaderboard"]
+    entry = {
+        "name": name,
+        "count": count,
+        "team": team,
+    }
+    result = leaderboard.insert_one(entry)
+    return result.inserted_id
+
+#vider et recréer les collections au lancement de db_init()
+db = get_db()
+db["heroes"].delete_many({})
+db["monsters"].delete_many({})
+db["bonuses"].delete_many({})
+insert_heroes()
+insert_monsters()
+insert_bonuses()
