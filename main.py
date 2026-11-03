@@ -17,8 +17,8 @@ def main():
     #    show_leaderboard()
         return
     else :
+        print("Au revoir !")
         return
-
 
 
 main()

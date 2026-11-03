@@ -5,7 +5,7 @@ from utils import *
 def launcher():
     #message de bienvenue
     display_launcher()
-    #choisir parmis 1-lancer le jeu, 2-consulter le leaderboard, 3-quitter
+    #choisir parmi 1-lancer le jeu, 2-consulter le leaderboard, 3-quitter
     choice = input("Veuillez entrer votre choix, qui doit être un nombre compris entre 1 et 3 : ")
     #tant que le choix est invalide on réessaie
     while not choice_is_valid(choice, 1, 3):
@@ -53,20 +53,27 @@ def build_team():
     print_team(team)
 
 
-#waves() a repeter tant que l'equipe est en vie
-#   definir le compteur de vagues
-#   afficher la vague actuelle 
-#   sélectionner le monstre de la vague aléatoirement depuis la db
-#   afficher le monstre sélectionné
-#   lancer un round avec round()
-#       afficher message de succes
-#       rechoisir un monstre
-#       incrementer le nombre de vague
+#def waves()
+#   definir le compteru de vagues a 0
+#   a repeter tant que l'equipe est en vie
+#       afficher la vague actuelle 
+#       sélectionner le monstre de la vague aléatoirement depuis la db avec monster_selection()
+#       lancer un round avec round()
+#       verifier si le round est gagné ou perdu avec win()
+#       si oui
+#           incrementer le nombre de vague
+#   on renvoie le nombre de vagues gagnées qui sert de score
 
-#boucle de jeu a repeter pour chaque vague tant que toute l'equipe n'est pas morte ou que le monstre n'est pas mort round()
+#def monster_selection():
+#   recuperer les mosntres de la bdd
+#   afficher un message 
+#   retourner le choix aleatoire
+
+#round()
+#boucle de jeu a repeter tant que toute l'equipe n'est pas morte ou que le monstre n'est pas mort
 #   faire attaquer l'equipe avec team_turn()
 #   faire attaquer le monstre (methode attack)
-#   verifier si le monstre est en vie
+#   verifier si le monstre est en vie avec methode is_alive()
 #   si oui
 #       faire attaquer le monstre avec monster_turn()
 #   sinon
@@ -102,6 +109,15 @@ def build_team():
 #   on verifie si il est en vie
 #       sinon on le remove de la liste
 #   on retourne la nouvelle liste team
+
+#def win(team, picked_monster, waves_count):
+#   verifier si toute la team est morte
+#   si oui
+#       on renvoie un message de defaite avec le nombnbre de vague
+#       on retourne false
+#   sinon si le monstre est mort
+#       on renvoie un message de victoire de la vague avec son numero
+#       on retourne true
 
 #recap score 
 # afficher le nombre de vagues surmontées par le joueur
