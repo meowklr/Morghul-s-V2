@@ -14,15 +14,18 @@ def launcher():
     #si le choix est valide on le retourne pour l'utiliser
     return choice
 
+def launch(choice):
+    if choice == 1:
+        return 
 
 #pseudo du joueur
 def set_nickname():
     # demander le pseudo et recup le choix
-    nickname = input("Quel est votre pseudo ?")
+    nickname = input("Quel est votre pseudo : ")
     #tant que le pseudo est invalide on redemande
     while not name_is_valid(nickname, 3, 13):
         #redemander le pseudo
-        nickname = input("Quel est votre pseudo ?")
+        nickname = input("Quel est votre pseudo : ")
     #si valide on le retourne pour l'utiliser
     return nickname
 
@@ -31,22 +34,27 @@ def set_nickname():
 def build_team():
     #créer la liste team et la taille voulue
     team = []
+    #créer la liste des indices des heors sélecitonnés
+    picked_indices = []
+    #defifnir la taille d'equipe souhaitée
     team_lenght = 3
+    # afficher la liste des personnages disponibles et leurs stats avec fonction display_heroes() et reuperer la liste
+    heroes = display_heroes()
     #tant que l'equipe n'est pas au complet
     while len(team) < team_lenght :
-    # afficher la liste des personnages disponibles et leurs stats avec fonction display_heroes()
-        display_heroes()
-# demander au joueur le nombre correspondant au personnage souhaité
-# redemander tant que le nombre est invalide
-# ajouter le personnage a l'equipe et le retirer de la liste des persos dispos
+#demander un choxi valide verifié avec hero_is_valid()
+        choice = hero_is_valid(input(f"Choisissez un héros ({len(team) + 1}/{team_lenght}) : "), heroes, picked_indices)
+        if choice :
+            # ajouter le personnage a l'equipe
+            picked_hero = heroes[int(choice) - 1]
+            team.append(picked_hero)
+            #l'ajouter a la liste des indices pris
+            picked_indices.append(choice)
+            #afficher le heros pris
+            print(f"{picked_hero.name} a été ajouté à votre équipe.")
 #afficher l'equipe finale
+    print_team(team)
 
-#choice_is_valid
-# est un nombre entier
-#  sinon false
-# compris entre 1 et le nombre de persos au total
-#  sinon false
-# retourner true
 
 #boucle de jeu a repeter pour chaque vague tant que toute l'equipe n'est pas morte
 # afficher la vague actuelle

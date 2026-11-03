@@ -11,10 +11,13 @@ def display_launcher():
 
 def display_heroes():
     #afficher la liste des héros disponibles
+    #recuperer les heros de la db
     heroes = get_all_heroes()
+    print("Voici la liste des héros disponibles.")
+    print()
     for i, hero in enumerate(heroes, 1):
-        print(f"{i}. {hero.name} - ATK: {hero.attack_power}, DEF: {hero.defense}, HP: {hero.hp}")
-        print()
+        print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
+    #retrouner la lsite heros pour l'utiliser
     return heroes
 
 #choice_is_valid
@@ -23,14 +26,14 @@ def choice_is_valid(choice : str, minimum, maximum):
     if not choice.isdigit():
 #  sinon false
         #afficher un message d'erreur
-        print("L'entrée n'est pas un nombre, réessayez.")
+        print("L'entrée doit être un nombre, réessayez.")
         return False
     choice = int(choice)
 # compris entre 1 et le nombre de persos au total
     if choice < minimum or choice > maximum :
 #  sinon false
         #afficher un message d'erreur
-        print("Le nombre doit être comrpis entre 1 et 3, réessayez.")
+        print(f"Le nombre doit être compris entre {minimum} et {maximum}, réessayez.")
         return False
 # retourner true
     return True
@@ -50,3 +53,32 @@ def name_is_valid(name : str, minimum, maximum):
         return False
 # retourner true
     return True
+
+def hero_is_valid(hero_selected : str , heroes, picked_indices):
+    #verifier que c'est un nombre
+    while True :
+        if not hero_selected.isdigit():
+        #sinon retourner false et erreur
+            print("L'entrée doit être un nombre, réessayez.")
+            return False
+        #verifier que le nombre correspond a un hero
+        hero_selected = int(hero_selected)
+        if hero_selected < 1 or hero_selected > len(heroes) :
+        #sinon retourner false et erreur
+            print("Le nombre choici doit correspondre à un héro disponible, réessayez.")
+            return False
+        #verifier qu'il n'a aps deja été sélectionné
+        if hero_selected in picked_indices :
+        #sinon retourner false et erreur
+            print("Ce héro a déjà été sélectionné, réessayez.")
+            return False
+        return hero_selected
+
+def print_team(team):
+    if team :
+        print("Votre équipe actuelle :")
+        for i, hero in enumerate(team, 1):
+            print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
+        print()
+    else:
+        print("Toute votre équipe a été vaincue. Vous avez perdu !")

@@ -8,7 +8,7 @@ class Character:
     #nom du perso
     name : str
     #pouvoir d'attaquer
-    attack_power : int
+    attack : int
     #valeur de la defense
     defense : int
     #pv actuels
