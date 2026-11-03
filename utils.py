@@ -21,57 +21,62 @@ def display_heroes():
     return heroes
 
 #choice_is_valid
-def choice_is_valid(choice : str, minimum, maximum):
+def get_valid_menu_choice(minimum, maximum):
     #est un nombre entier
-    if not choice.isdigit():
-        #sinon false
-        #afficher un message d'erreur
-        print("L'entrée doit être un nombre, réessayez.")
-        return False
-    choice = int(choice)
-    #compris entre 1 et le nombre de persos au total
-    if choice < minimum or choice > maximum :
-        #sinon false
-        #afficher un message d'erreur
-        print(f"Le nombre doit être compris entre {minimum} et {maximum}, réessayez.")
-        return False
-    #retourner true
-    return True
+    while True: 
+        choice = input("Veuillez entrer votre choix, qui doit être un nombre compris entre 1 et 3 : ")
+        if not choice.isdigit():
+            #sinon false
+            #afficher un message d'erreur
+            print("L'entrée doit être un nombre, réessayez.")
+            continue
+        choice_int = int(choice)
+        #compris entre 1 et le nombre de persos au total
+        if choice_int < minimum or choice_int > maximum :
+            #sinon false
+            #afficher un message d'erreur
+            print(f"Le nombre doit être compris entre {minimum} et {maximum}, réessayez.")
+            continue
+        #retourner true
+        return choice_int
 
 #name_is_valid(min, max)
-def name_is_valid(name : str, minimum, maximum):
-    #chaine de caractere
-    name = name.strip()
-    if not name.isalnum():
-        #sinon retoruner false
-        print("Le pseudo doit être une chaîne de caractères, réssayez.")
-        return False
-    #compris entre 3 et 12 caracteres
-    if len(name) < minimum or len(name) > maximum:
-        #sinon retourner false
-        print("Erreur, le pseudo choisi est trop court / trop long, réessayez.")
-        return False
-    #retourner true
-    return True
+def get_valid_name(minimum, maximum):
+    while True:
+        nickname = input("Quel est votre pseudo : ")
+        #chaine de caractere
+        nickname = nickname.strip()
+        if not nickname.isalnum():
+            #sinon retoruner false
+            print("Le pseudo doit être une chaîne de caractères, réssayez.")
+            continue
+        #compris entre 3 et 12 caracteres
+        if len(nickname) < minimum or len(nickname) > maximum:
+            #sinon retourner false
+            print("Erreur, le pseudo choisi est trop court / trop long, réessayez.")
+            continue
+        #retourner true
+        return nickname
 
-def hero_is_valid(hero_selected : str , heroes, picked_indices):
+def get_valid_hero(heroes, picked_indices):
     #verifier que c'est un nombre
     while True :
+        hero_selected = input(f"Choisissez un héros : ")
         if not hero_selected.isdigit():
         #sinon retourner false et erreur
             print("L'entrée doit être un nombre, réessayez.")
-            return False
+            continue
         #verifier que le nombre correspond a un hero
         hero_selected = int(hero_selected)
         if hero_selected < 1 or hero_selected > len(heroes) :
         #sinon retourner false et erreur
             print("Le nombre choici doit correspondre à un héro disponible, réessayez.")
-            return False
+            continue
         #verifier qu'il n'a aps deja été sélectionné
         if hero_selected in picked_indices :
         #sinon retourner false et erreur
             print("Ce héro a déjà été sélectionné, réessayez.")
-            return False
+            continue
         return hero_selected
 
 def print_team(team):
@@ -85,3 +90,12 @@ def print_team(team):
     else:
         #sinon afficher que l'equipe est morte
         print("Toute votre équipe a été vaincue. Vous avez perdu !")
+
+def add_hero_to_team(hero, team):
+    #si l'ennemi n'est psa deja dans la team
+    if not hero in team :
+        #on l'ajoute dans la team
+        team.append(hero)
+        print(f"{hero.name} a été ajouté à votre équipe.")
+    #return team
+    return team
