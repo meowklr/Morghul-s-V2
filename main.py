@@ -3,15 +3,22 @@ from game import *
 #lancer toutes les dependances et le jeu
 
 #fonction main
-# affiche menu
-# demande le choix
-# execute le processus correspondant au choix
+#affiche menu
+#demande le choix
+#execute le processus correspondant au choix
 
 def main():
     launcher_choice = launcher()
-    check_launcher_choice()
-    nickname = set_nickname()
-    team = build_team()
+    if launcher_choice == 1:
+        nickname = set_nickname()
+        team = build_team()
+    elif launcher_choice == 2:
+        print("Affichage du Leaderboard.")
+    #    show_leaderboard()
+        return
+    else :
+        return
 
 
 
+main()
