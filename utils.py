@@ -1,6 +1,6 @@
 from db_init import *
 
-def display_launcher():
+def display_menu_choices():
     print("\n+------------------------------------+")
     print("|        BIENVENUE SUR LE JEU        |")
     print("+------------------------------------+")
@@ -58,7 +58,7 @@ def get_valid_name(minimum, maximum):
         #retourner true
         return nickname
 
-def get_valid_hero(heroes, picked_indices):
+def get_valid_hero(heroes, team):
     #verifier que c'est un nombre
     while True :
         hero_selected = input(f"Choisissez un héros : ")
@@ -73,7 +73,7 @@ def get_valid_hero(heroes, picked_indices):
             print("Le nombre choici doit correspondre à un héro disponible, réessayez.")
             continue
         #verifier qu'il n'a aps deja été sélectionné
-        if hero_selected in picked_indices :
+        if heroes[hero_selected - 1] in team :
         #sinon retourner false et erreur
             print("Ce héro a déjà été sélectionné, réessayez.")
             continue
