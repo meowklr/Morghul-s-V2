@@ -8,6 +8,7 @@ def jeu():
     add_to_leaderboard(nickname, count, team)
 
 def main():
+    display_menu_banner()
     while True :
         menu_choice = display_menu_choices()
         if menu_choice == 1:

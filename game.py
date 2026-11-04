@@ -4,13 +4,7 @@ from interfaces import *
 #?==================================== DEBUT DU JEU ====================================
 
 def build_team():
-    team = []
-    team_lenght = 3
-    heroes = display_heroes()
-    while len(team) < team_lenght :
-        hero_choice = get_valid_hero(heroes, team)
-        picked_hero = heroes[int(hero_choice) - 1]
-        team = add_hero_to_team(picked_hero, team)
+    team = select_heroes(3)
     print_team(team)
     return team
 

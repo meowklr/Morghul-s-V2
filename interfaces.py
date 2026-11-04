@@ -9,9 +9,12 @@ from db_init import *
 
 console = Console()
 
+
+#?==================================== MENU PRINCIPAL ====================================
+
+
 def display_menu_banner():
     console.clear()
-    
     banner = Panel(Align.center("[bold cyan] MORGHUL'S CHRONICLES [/bold cyan]"),
         subtitle = "[dim]Version 2.0[/dim]",
         border_style = "blue",
@@ -19,11 +22,9 @@ def display_menu_banner():
         width = 100,
         padding = (1, 1)
     )
-
     console.print(Align.center(banner))
 
 def display_menu_choices():
-
     choice = inquirer.select(
         message="Menu Principal :",
         choices=[
@@ -33,8 +34,60 @@ def display_menu_choices():
         ],
         pointer="> ",
     ).execute()
-
     return choice
+
+
+#?==================================== CHOIX EQUIPE ====================================
+
+
+def select_heroes(team_lenght = 3):
+    heroes = get_all_heroes()
+
+    choices = []
+    for hero in heroes:
+            choices.append(Choice(
+                        value=hero,
+                        name=f"{hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}"
+                    ))
+    selected_heroes = inquirer.checkbox(
+        message = "Voici la listee des héros :",
+        choices = choices,
+        pointer = "> ",
+        validate=lambda result: len(result) == team_lenght,
+        invalid_message=f"Tu dois sélectionner exactement {team_lenght} héros.",
+    ).execute()
+
+    return selected_heroes
+
+def print_team(team):
+    table = Table(
+        title="[bold cyan] VOTRE ÉQUIPE ACTUELLE [/bold cyan]",
+        box=box.ROUNDED,
+        border_style="bright_blue"
+    )
+    table.add_column("#", justify="center", style="bold", width=3)
+    table.add_column("Nom", style="white")
+    table.add_column("ATK", justify="center", style="red")
+    table.add_column("DEF", justify="center", style="blue")
+    table.add_column("HP", justify="center", style="green")
+
+    for i, hero in enumerate(team, 1):
+
+        print(hero)
+        table.add_row(
+            str(i),
+            hero.name,
+            str(hero.attack),
+            str(hero.defense),
+            f"{hero.hp}/{getattr(hero, 'max_hp', hero.hp)}"
+        )
+    console.print()
+    console.print(table)
+    console.print()
+
+
+#?==================================== CLASSEMENT ====================================
+
 
 def show_leaderboard():
     leaderboard = get_leaderboard()

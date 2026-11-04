@@ -4,7 +4,7 @@ import random
 #?==================================== DEBUT DU JEU ====================================
 
 
-def display_heroes():
+def old_display_heroes():
     heroes = get_all_heroes()
     print("\nVoici la liste des héros disponibles.")
     print()
@@ -66,7 +66,7 @@ def wave_message(wave_counter):
 
 #?==================================== UTILITAIRES POUR LA TEAM ====================================
 
-def print_team(team): 
+def old_print_team(team): 
     print("Votre équipe actuelle :")
     for i, hero in enumerate(team, 1):
         print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")

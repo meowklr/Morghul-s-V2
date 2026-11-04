@@ -9,7 +9,7 @@ class Character:
     max_hp : int
 
     def __str__(self):
-        return f"Personnage : {self.nom} - Attaque : {self.attack} - Défense : {self.defense} - PV max : {self.max_hp} - PV actuels : {self.hp}."
+        return f"Personnage : {self.name} - Attaque : {self.attack} - Défense : {self.defense} - PV max : {self.max_hp} - PV actuels : {self.hp}."
 
     def take_damage(self, damage):
         damages = max(1, damage - self.defense)
