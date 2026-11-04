@@ -63,6 +63,15 @@ def get_valid_hero(heroes, team):
             continue
         return hero_selected
 
+#?==================================== UTILITAIRES D'AFFICHAGE ====================================
+
+
+def wave_message(wave_counter):
+        wave_msg = f" VAGUE {wave_counter} "
+        width = 80
+        print(f"\n+{wave_msg:-^{width}}+")
+
+
 #?==================================== UTILITAIRES POUR LA TEAM ====================================
 
 def print_team(team): 

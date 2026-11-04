@@ -1,4 +1,3 @@
-
 from utils import *
 
 #?==================================== DEBUT DU JEU ====================================
@@ -25,7 +24,7 @@ def build_team():
 def waves(team):
     wave_counter = 1
     while get_alive_heroes(team):
-        print(f"\nVague actuelle : {wave_counter}.")
+        wave_message(wave_counter)
         picked_monster = monster_selection()
         round(team, picked_monster)
         if win(team, picked_monster):

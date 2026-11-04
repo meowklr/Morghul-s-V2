@@ -20,14 +20,6 @@ def get_all_monsters():
     return [Character(**monster) for monster in monsters_dict]  
 
 
-"""def get_all_bonuses():
-    
-    
-    db = get_db()
-    bonuses_dict = list(db["bonuses"].find({}, {"_id": 0}))
-    return [Bonus(**bonus) for bonus in bonuses_dict]"""
-
-
 def insert_heroes():
     heroes_list=get_db()["heroes"]
     heroes_list.insert_many([
@@ -59,15 +51,6 @@ def insert_monsters():
         {"name": "Loup-garou", "attack": 28, "defense": 18, "hp": 180, "max_hp": 180},
         {"name": "Squelette", "attack": 15, "defense": 7, "hp": 90, "max_hp": 90}
     ])
-
-
-"""def insert_bonuses():
-    bonuses_list=get_db()["bonuses"]
-    bonuses_list.insert_many([
-        {"name": "Potion de vie", "description": "Restaure complètement la vie d'un de vos héros aléatoire", "effect": "heal"},
-        {"name": "Potion de force", "description": "Augmente l'attaque de 10 points à l'un de vos héros aléatoire", "effect": "increase_attack"},
-        {"name": "Potion de défense", "description": "Augmente la défense de 10 points à l'un de vos héros aléatoire", "effect": "increase_defense"}
-    ])"""
 
 
 def add_to_leaderboard(name, count, team):
