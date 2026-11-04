@@ -45,7 +45,7 @@ def round(team, picked_monster):
                 print(f"Le monstre a vaincu {dead_hero.name}...")
         else : 
             print("Ton équipe a achevé le monstre !")
-    return team 
+    return team
 
 
 def team_turn(team, monster):
@@ -78,3 +78,11 @@ def win(team, picked_monster):
         return False
     elif not picked_monster.is_alive():
         return True
+
+
+#ajouter des parametres avancés de debut de jeu :
+#choisir une taille de team precise,
+#pouvoir choisir plusieurs fois le meme heros,
+#pouvoir choisir un nombre de vagues max,
+#choisir le nombre de monstre a chaque vague,
+#faire en sorte que ce soit le meme a chaque fois

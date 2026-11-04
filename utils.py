@@ -18,7 +18,6 @@ def display_heroes():
     print()
     for i, hero in enumerate(heroes, 1):
         print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
-    
     return heroes
 
 #?==================================== VALIDATION DES INPUTS USER ====================================
@@ -72,6 +71,7 @@ def print_team(team):
         print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
     print()
 
+
 def add_hero_to_team(hero, team): 
     if not hero in team :
         team.append(hero)
@@ -80,10 +80,7 @@ def add_hero_to_team(hero, team):
 
 
 def get_alive_heroes(team): 
-    for hero in team[:]:
-        if not hero.is_alive():
-            team.remove(hero)
-    return team
+    return [hero for hero in team if hero.is_alive()]
 
 
 def is_team_alive(team): 
@@ -107,5 +104,10 @@ def monster_target(team):
 
 def show_leaderboard():
     leaderboard = get_leaderboard()
+    if not leaderboard : 
+        print("Aucun score enregistré pour le moment.")
+    print("\n+------------------------------------+")
+    print("|               TOP 10               |")
+    print("+------------------------------------+")
     for score in leaderboard :
         print(f"{score["name"]} - {score["count"]} vague(s) -  Equipe : {score["team"]}")

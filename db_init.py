@@ -76,7 +76,7 @@ def add_to_leaderboard(name, count, team):
     entry = {
         "name": name,
         "count": count,
-        "team": team,
+        "team": [hero.name for hero in team],
     }
     result = leaderboard.insert_one(entry)
     return result.inserted_id
