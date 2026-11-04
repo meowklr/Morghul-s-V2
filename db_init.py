@@ -1,8 +1,8 @@
-from pymongo import MongoClient
+import pymongo
 from models import Character
 
 def get_db():
-    client = MongoClient("mongodb://localhost:27017/MONGO_")
+    client = pymongo.MongoClient("mongodb://localhost:27017/MONGO_")
     db = client["game_db"]
     return db
 
@@ -58,13 +58,13 @@ def insert_monsters():
         {"name": "Squelette", "attack": 15, "defense": 7, "hp": 90, "max_hp": 90}
     ])
 
-def insert_bonuses():
+"""def insert_bonuses():
     bonuses_list=get_db()["bonuses"]
     bonuses_list.insert_many([
         {"name": "Potion de vie", "description": "Restaure complètement la vie d'un de vos héros aléatoire", "effect": "heal"},
         {"name": "Potion de force", "description": "Augmente l'attaque de 10 points à l'un de vos héros aléatoire", "effect": "increase_attack"},
         {"name": "Potion de défense", "description": "Augmente la défense de 10 points à l'un de vos héros aléatoire", "effect": "increase_defense"}
-    ])
+    ])"""
 
 
 def add_to_leaderboard(name, count, team):
@@ -80,6 +80,11 @@ def add_to_leaderboard(name, count, team):
     result = leaderboard.insert_one(entry)
     return result.inserted_id
 
+def get_leaderboard():
+    db = get_db()
+    leaderboard_dict = list(db["leaderboard"].find({}, {"_id":0}).sort("count",pymongo.DESCENDING).limit(10))
+    return leaderboard_dict
+
 #vider et recréer les collections au lancement de db_init()
 db = get_db()
 db["heroes"].delete_many({})
@@ -87,4 +92,3 @@ db["monsters"].delete_many({})
 db["bonuses"].delete_many({})
 insert_heroes()
 insert_monsters()
-insert_bonuses()

@@ -1,6 +1,7 @@
 #importer les utilitaires
-import random
 from utils import *
+
+#?==================================== DEBUT DU JEU ====================================
 
 #lancement du jeu
 def menu():
@@ -31,6 +32,8 @@ def build_team():
     print_team(team)
     return team
 
+
+#?==================================== CORPS DU JEU ====================================
 
 #def waves()
 def waves(team):
@@ -125,8 +128,4 @@ def win(team, picked_monster):
 #       on retourne true
         return True
 
-
-#recap score 
-# afficher le nombre de vagues surmontées par le joueur
-# ajouter son score au leaderboard de la db et le pseudo associé
 

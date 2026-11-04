@@ -1,6 +1,7 @@
 from db_init import *
+import random
 
-#==================================== DEBUT DU JEU ====================================
+#?==================================== DEBUT DU JEU ====================================
 
 def display_menu_choices():
     print("\n+------------------------------------+")
@@ -22,7 +23,7 @@ def display_heroes():
     #retrouner la lsite heros pour l'utiliser
     return heroes
 
-#==================================== VALIDATION DES INPUTS USER ====================================
+#?==================================== VALIDATION DES INPUTS USER ====================================
 
 #choice_is_valid
 def get_valid_menu_choice(minimum, maximum):
@@ -83,7 +84,7 @@ def get_valid_hero(heroes, team):
             continue
         return hero_selected
 
-#==================================== UTILITAIRES POUR LA TEAM ====================================
+#?==================================== UTILITAIRES POUR LA TEAM ====================================
 
 def print_team(team): #sert a afficher l'equipe porprement
     #afficher l'equipe
@@ -116,7 +117,7 @@ def get_alive_heroes(team): #renvoie la team sans les heros morts
 def is_team_alive(team): #verifie si l'equipe contient au moins un heros
     return bool(team)
 
-#==================================== UTILITAIRES POUR LE MONSTRE ====================================
+#?==================================== UTILITAIRES POUR LE MONSTRE ====================================
 
 #def monster_selection(monster_list):
 def monster_selection(): #selectionne le monstre qui attaque pour la vague actuelle
@@ -132,3 +133,14 @@ def monster_target(team): #definir quelle cible le monstre va attaquer
     #definir target comme etant un choix aleatoire des perso de la team en vie
     target = random.choice(team)
     return target
+
+#?==================================== GESTION DU CLASSEMENT ====================================
+
+#def print_leaderboard():
+def show_leaderboard():
+#   recuperer le leaderboard de la db
+    leaderboard = get_leaderboard()
+#   pour chaque entree:
+    for score in leaderboard :
+#       afficher proprement une ligne
+        print(f"{score.name} - {score.count} vague(s) -  Equipe : {score.team}")
