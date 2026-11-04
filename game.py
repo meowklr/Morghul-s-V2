@@ -1,12 +1,7 @@
 from utils import *
+from interfaces import *
 
 #?==================================== DEBUT DU JEU ====================================
-
-def menu():
-    display_menu_choices()
-    choice = get_valid_menu_choice(1,3)
-    return int(choice)
-
 
 def build_team():
     team = []

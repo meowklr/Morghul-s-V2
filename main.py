@@ -1,4 +1,5 @@
 from game import *
+from interfaces import *
 
 def jeu():
     nickname = get_valid_name(3,13)
@@ -8,7 +9,7 @@ def jeu():
 
 def main():
     while True :
-        menu_choice = menu()
+        menu_choice = display_menu_choices()
         if menu_choice == 1:
             jeu()
         elif menu_choice == 2:

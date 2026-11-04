@@ -3,14 +3,6 @@ import random
 
 #?==================================== DEBUT DU JEU ====================================
 
-def display_menu_choices():
-    print("\n+------------------------------------+")
-    print("|        BIENVENUE SUR LE JEU        |")
-    print("+------------------------------------+")
-    print("| [1]  Demarrer le jeu               |")
-    print("| [2]  Voir les scores               |")
-    print("| [3]  Quitter                       |")
-    print("+------------------------------------+")
 
 def display_heroes():
     heroes = get_all_heroes()
@@ -111,7 +103,7 @@ def monster_target(team):
 #?==================================== GESTION DU CLASSEMENT ====================================
 
 
-def show_leaderboard():
+def old_show_leaderboard():
     leaderboard = get_leaderboard()
 
     if not leaderboard : 
