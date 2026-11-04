@@ -1,31 +1,32 @@
 import pymongo
 from models import Character
 
+
 def get_db():
     client = pymongo.MongoClient("mongodb://localhost:27017/MONGO_")
     db = client["game_db"]
     return db
 
+
 def get_all_heroes():
-    #recuperer les heros
-    #en faire des objets Hero
     db = get_db()
     heroes_dict = list(db["heroes"].find({}, {"_id": 0}))
     return [Character(**hero) for hero in heroes_dict] 
 
+
 def get_all_monsters():
-    #recup els monstres
-    #en faire des objets Monstre
     db = get_db()
     monsters_dict = list(db["monsters"].find({}, {"_id": 0}))
     return [Character(**monster) for monster in monsters_dict]  
 
+
 """def get_all_bonuses():
-    #recuperer les bonus de la db
-    #en faire des objets Bonus
+    
+    
     db = get_db()
     bonuses_dict = list(db["bonuses"].find({}, {"_id": 0}))
     return [Bonus(**bonus) for bonus in bonuses_dict]"""
+
 
 def insert_heroes():
     heroes_list=get_db()["heroes"]
@@ -37,11 +38,12 @@ def insert_heroes():
         {"name": "Sigrid Lame-d’Acier", "attack": 14, "defense": 12, "hp": 110, "max_hp": 110},
         {"name": "Azrael Ombrefoutre", "attack": 25, "defense": 3, "hp": 70, "max_hp": 70},
         {"name": "Tharion le Colosse", "attack": 17, "defense": 15, "hp": 120, "max_hp": 120},
-        {"name": "Elowen la Pure", "attack": 19, "defense": 9, "hp": 95, "max_hp": 95},  # Moine
+        {"name": "Elowen la Pure", "attack": 19, "defense": 9, "hp": 95, "max_hp": 95},  
         {"name": "Graven Brisecrâne", "attack": 23, "defense": 6, "hp": 105, "max_hp": 105},
         {"name": "Rowan Feuillombre", "attack": 16, "defense": 11, "hp": 100, "max_hp": 100},
         {"name": "Morghul Apocalypse", "attack": 50, "defense": 50, "hp": 200, "max_hp": 200}
     ])
+
 
 def insert_monsters():
     monsters_list=get_db()["monsters"]
@@ -58,6 +60,7 @@ def insert_monsters():
         {"name": "Squelette", "attack": 15, "defense": 7, "hp": 90, "max_hp": 90}
     ])
 
+
 """def insert_bonuses():
     bonuses_list=get_db()["bonuses"]
     bonuses_list.insert_many([
@@ -68,8 +71,6 @@ def insert_monsters():
 
 
 def add_to_leaderboard(name, count, team):
-    #recup db
-    #ajouter l'entrée leaderboard avec les categories nom compteur et equipe
     db = get_db()
     leaderboard = db["leaderboard"]
     entry = {
@@ -85,7 +86,7 @@ def get_leaderboard():
     leaderboard_dict = list(db["leaderboard"].find({}, {"_id":0}).sort("count",pymongo.DESCENDING).limit(10))
     return leaderboard_dict
 
-#vider et recréer les collections au lancement de db_init()
+
 db = get_db()
 db["heroes"].delete_many({})
 db["monsters"].delete_many({})

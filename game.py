@@ -1,76 +1,46 @@
-#importer les utilitaires
+
 from utils import *
 
 #?==================================== DEBUT DU JEU ====================================
 
-#lancement du jeu
 def menu():
-    #message de bienvenue
     display_menu_choices()
-    #choisir parmi 1-lancer le jeu, 2-consulter le leaderboard, 3-quitter
     choice = get_valid_menu_choice(1,3)
-    #si le choix est valide on le retourne pour l'utiliser
     return int(choice)
 
 
-#selection de trois personnages parmis tous
 def build_team():
-    #créer la liste team et la taille voulue
     team = []
-    #defifnir la taille d'equipe souhaitée
     team_lenght = 3
-    #afficher la liste des personnages disponibles et leurs stats avec fonction display_heroes() et reuperer la liste
     heroes = display_heroes()
-    #tant que l'equipe n'est pas au complet
     while len(team) < team_lenght :
-        #demander un choxi valide verifié
         hero_choice = get_valid_hero(heroes, team)
-        #ajouter le personnage a l'equipe
         picked_hero = heroes[int(hero_choice) - 1]
         team = add_hero_to_team(picked_hero, team)
-    #afficher l'equipe finale
     print_team(team)
     return team
 
-
 #?==================================== CORPS DU JEU ====================================
 
-#def waves()
 def waves(team):
-#   definir le compteru de vagues a 0
     wave_counter = 1
-#   a repeter tant que l'equipe est en vie
     while get_alive_heroes(team):
-#       afficher la vague actuelle 
         print(f"Vague actuelle : {wave_counter}.")
-#       sélectionner le monstre de la vague aléatoirement depuis la db avec monster_selection()
         picked_monster = monster_selection()
-#       lancer un round avec round()
         round(team, picked_monster)
-#       verifier si le round est gagné ou perdu avec win()
         if win(team, picked_monster):
-#           on renvoie un message de victoire de la vague avec son numero
             print(f"Bravo, tu as surmonté la vague {wave_counter} !")
-#           incrementer le nombre de vague
             wave_counter += 1
-#       on renvoie un message de defaite avec le nombnbre de vague
         else :
             print(f"Toute ton équipe est morte, tu as survécu à {wave_counter} vague(s)...")
-#   on renvoie le nombre de vagues gagnées qui sert de score
     return wave_counter
 
 
-#round()
 def round(team, picked_monster):
-#   boucle de jeu a repeter tant que toute l'equipe n'est pas morte et que le monstre n'est pas mort*
     while is_team_alive(team) and picked_monster.is_alive() :
-#       faire attaquer l'equipe avec team_turn()
         if not team_turn(team, picked_monster) :
-#           faire attaquer le monstre
             dead_hero = monster_turn(team, picked_monster)
-#           si un perso est mort (si monster_turn() true) 
             if dead_hero is not None :
-#               revoir la team avec les heros en vie()
                 team = get_alive_heroes(team)
                 print(f"Le monstre a vaincu {dead_hero.name}...")
         else : 
@@ -78,54 +48,33 @@ def round(team, picked_monster):
     return team 
 
 
-#def team_turn(team, mosnter):
 def team_turn(team, monster):
-#   si en vie il attaque le monstre
     if monster.is_alive():
         for hero in get_alive_heroes(team):
             hero.deal_damage(monster)
-    #       afficher l'attaque avec la methode deal damage
             print(f"{hero.name} a infligé {max(1, hero.attack - monster.defense)} dégat(s) au monstre !")
-    #       si le monstre est mort
             if not monster.is_alive():
-    #           return true pour dire que l'equipe a vaincu
                 return True
-#   return false pour dire que l'equipe n'a pas vaincu
     return False
 
 
-#def monster_turn(team, monster):
 def monster_turn(team,monster):
     if monster.is_alive():
-    #   selectionne un personnage aleatoire de l'equipe
         target = monster_target(get_alive_heroes(team))
-    #   l'attaque avec la methode deal damage
         monster.deal_damage(target)
-    #   afficher l'attaque
         print(f"{monster.name} a infligé {max(1, monster.attack - target.defense)} dégat(s) à {target.name} !")
-    #   si le monstre a vaincu un hero
         if not target.is_alive():
-    #       return le heros mort
             return target
-    #   return none
     return None
 
 
 def monster_target(team):
-    #definir target comme etant un choix aleatoire des perso de la team en vie
     target = random.choice(team)
     return target
 
 
-#def win(team, picked_monster):
 def win(team, picked_monster):
-#   si toute la team est morte
     if not is_team_alive(team):
-#       on retourne false
         return False
-#   sinon si le monstre est mort
     elif not picked_monster.is_alive():
-#       on retourne true
         return True
-
-

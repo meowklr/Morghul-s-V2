@@ -1,12 +1,5 @@
 from game import *
 
-#lancer toutes les dependances et le jeu
-
-#fonction main
-#affiche menu
-#demande le choix
-#execute le processus correspondant au choix
-
 def jeu():
     nickname = get_valid_name(3,13)
     team = build_team()
@@ -24,6 +17,5 @@ def main():
     else :
         print("Au revoir !")
         return
-
 
 main()
