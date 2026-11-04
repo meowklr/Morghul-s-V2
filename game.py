@@ -35,7 +35,7 @@ def build_team():
 #def waves()
 def waves(team):
 #   definir le compteru de vagues a 0
-    wave_counter = 0
+    wave_counter = 1
 #   a repeter tant que l'equipe est en vie
     while get_alive_heroes(team):
 #       afficher la vague actuelle 
@@ -47,7 +47,7 @@ def waves(team):
 #       verifier si le round est gagné ou perdu avec win()
         if win(team, picked_monster):
 #           on renvoie un message de victoire de la vague avec son numero
-            print(f"Bravo, tu as surmonté la vague {wave_counter}!")
+            print(f"Bravo, tu as surmonté la vague {wave_counter} !")
 #           incrementer le nombre de vague
             wave_counter += 1
 #       on renvoie un message de defaite avec le nombnbre de vague
@@ -57,17 +57,6 @@ def waves(team):
     return wave_counter
 
 
-#def monster_selection(monster_list):
-def monster_selection():
-#   recuperer les mosntres de la bdd
-    monster_list = get_all_monsters()
-    picked_monster = random.choice(monster_list)
-#   afficher un message
-    print(f"Le monstre qui attaque à la vague actuelle est un.e {picked_monster.name}!")
-#   retourner le choix aleatoire
-    return picked_monster
-
-
 #round()
 def round(team, picked_monster):
 #   boucle de jeu a repeter tant que toute l'equipe n'est pas morte et que le monstre n'est pas mort*
@@ -75,28 +64,28 @@ def round(team, picked_monster):
 #       faire attaquer l'equipe avec team_turn()
         if not team_turn(team, picked_monster) :
 #           faire attaquer le monstre
-            if monster_turn(team, picked_monster):
+            dead_hero = monster_turn(team, picked_monster)
 #           si un perso est mort (si monster_turn() true) 
-#               tuer le perso avec kill_hero()
+            if dead_hero is not None :
+#               revoir la team avec les heros en vie()
                 team = get_alive_heroes(team)
+                print(f"Le monstre a vaincu {dead_hero.name}...")
+        else : 
+            print("Ton équipe a achevé le monstre !")
     return team 
 
 
 #def team_turn(team, mosnter):
 def team_turn(team, monster):
-
-#   pour chaque membre de la team
-    for hero in team :
-#       si en vie il attaque le monstre TODO verifier ici si monstre est en vie avec une fonction
-        if hero.is_alive(): #TODO pas besoin de verifier si en vie, preferer le faire pour chaque heros en vie avec get_alive_heroes
+#   si en vie il attaque le monstre
+    if monster.is_alive():
+        for hero in get_alive_heroes(team):
             hero.deal_damage(monster)
-#           afficher l'attaque avec la methode deal damage
+    #       afficher l'attaque avec la methode deal damage
             print(f"{hero.name} a infligé {max(1, hero.attack - monster.defense)} dégat(s) au monstre !")
-#           si le monstre est mort
+    #       si le monstre est mort
             if not monster.is_alive():
-#               on affiche le message
-                print(f"{hero.name} a achevé le monstre !") #TODO messages de victoires dans round
-#               return true pour dire que l'equipe a vaincu
+    #           return true pour dire que l'equipe a vaincu
                 return True
 #   return false pour dire que l'equipe n'a pas vaincu
     return False
@@ -104,38 +93,25 @@ def team_turn(team, monster):
 
 #def monster_turn(team, monster):
 def monster_turn(team,monster):
-#   si il est en vie
     if monster.is_alive():
-#       selectionne un personnage aleatoire de l'equipe
-        target = random.choice(team) #TODO fonction de choix de la cible du monstre pour scalabilité
-#       l'attaque avec la methode deal damage
+    #   selectionne un personnage aleatoire de l'equipe
+        target = monster_target(get_alive_heroes(team))
+    #   l'attaque avec la methode deal damage
         monster.deal_damage(target)
-#       afficher l'attaque
+    #   afficher l'attaque
         print(f"{monster.name} a infligé {max(1, monster.attack - target.defense)} dégat(s) à {target.name} !")
-#       si le monstre a vaincu un hero
+    #   si le monstre a vaincu un hero
         if not target.is_alive():
-#           on affiche le message
-            print(f"Le monstre a vaincu {target.name}...")  #TODO messages de victoires dans round
-#           return true
-            return True
-#   return false
-    return False
+    #       return le heros mort
+            return target
+    #   return none
+    return None
 
 
-#def get_alive_heroes(team)
-def get_alive_heroes(team):
-#   pour chaque heros dans une copie de la liste team:
-    for hero in team[:]:
-#   on verifie si il est en vie
-        if not hero.is_alive():
-#       sinon on le remove de la liste
-            team.remove(hero)
-#   on retourne la nouvelle liste team
-    return team
-
-#def is_team_alive(team):
-def is_team_alive(team):
-    return bool(team)
+def monster_target(team):
+    #definir target comme etant un choix aleatoire des perso de la team en vie
+    target = random.choice(team)
+    return target
 
 
 #def win(team, picked_monster):

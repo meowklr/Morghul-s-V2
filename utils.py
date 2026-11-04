@@ -1,5 +1,7 @@
 from db_init import *
 
+#==================================== DEBUT DU JEU ====================================
+
 def display_menu_choices():
     print("\n+------------------------------------+")
     print("|        BIENVENUE SUR LE JEU        |")
@@ -19,6 +21,8 @@ def display_heroes():
         print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
     #retrouner la lsite heros pour l'utiliser
     return heroes
+
+#==================================== VALIDATION DES INPUTS USER ====================================
 
 #choice_is_valid
 def get_valid_menu_choice(minimum, maximum):
@@ -79,19 +83,16 @@ def get_valid_hero(heroes, team):
             continue
         return hero_selected
 
-def print_team(team):
-    #verifier si l'equipe contient des heros
-    if team :
-        #afficher l'equipe
-        print("Votre équipe actuelle :")
-        for i, hero in enumerate(team, 1):
-            print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
-        print()
-    else:
-        #sinon afficher que l'equipe est morte
-        print("Toute votre équipe a été vaincue. Vous avez perdu !")
+#==================================== UTILITAIRES POUR LA TEAM ====================================
 
-def add_hero_to_team(hero, team):
+def print_team(team): #sert a afficher l'equipe porprement
+    #afficher l'equipe
+    print("Votre équipe actuelle :")
+    for i, hero in enumerate(team, 1):
+        print(f"{i}. {hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}")
+    print()
+
+def add_hero_to_team(hero, team): #ajoute un hero a l'equipe
     #si l'ennemi n'est psa deja dans la team
     if not hero in team :
         #on l'ajoute dans la team
@@ -99,3 +100,35 @@ def add_hero_to_team(hero, team):
         print(f"{hero.name} a été ajouté à votre équipe.")
     #return team
     return team
+
+#def get_alive_heroes(team)
+def get_alive_heroes(team): #renvoie la team sans les heros morts
+#   pour chaque heros dans une copie de la liste team:
+    for hero in team[:]:
+#   on verifie si il est en vie
+        if not hero.is_alive():
+#       sinon on le remove de la liste
+            team.remove(hero)
+#   on retourne la nouvelle liste team
+    return team
+
+#def is_team_alive(team):
+def is_team_alive(team): #verifie si l'equipe contient au moins un heros
+    return bool(team)
+
+#==================================== UTILITAIRES POUR LE MONSTRE ====================================
+
+#def monster_selection(monster_list):
+def monster_selection(): #selectionne le monstre qui attaque pour la vague actuelle
+#   recuperer les mosntres de la bdd
+    monster_list = get_all_monsters()
+    picked_monster = random.choice(monster_list)
+#   afficher un message
+    print(f"Le monstre qui attaque à la vague actuelle est un.e {picked_monster.name}!")
+#   retourner le choix aleatoire
+    return picked_monster
+
+def monster_target(team): #definir quelle cible le monstre va attaquer
+    #definir target comme etant un choix aleatoire des perso de la team en vie
+    target = random.choice(team)
+    return target
