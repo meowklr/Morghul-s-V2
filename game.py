@@ -25,7 +25,7 @@ def build_team():
 def waves(team):
     wave_counter = 1
     while get_alive_heroes(team):
-        print(f"Vague actuelle : {wave_counter}.")
+        print(f"\nVague actuelle : {wave_counter}.")
         picked_monster = monster_selection()
         round(team, picked_monster)
         if win(team, picked_monster):
@@ -42,9 +42,9 @@ def round(team, picked_monster):
             dead_hero = monster_turn(team, picked_monster)
             if dead_hero is not None :
                 team = get_alive_heroes(team)
-                print(f"Le monstre a vaincu {dead_hero.name}...")
+                print(f"\nLe monstre a vaincu {dead_hero.name}...")
         else : 
-            print("Ton équipe a achevé le monstre !")
+            print("\nTon équipe a achevé le monstre !")
     return team
 
 
@@ -52,7 +52,7 @@ def team_turn(team, monster):
     if monster.is_alive():
         for hero in get_alive_heroes(team):
             hero.deal_damage(monster)
-            print(f"{hero.name} a infligé {max(1, hero.attack - monster.defense)} dégat(s) au monstre !")
+            print(f"\n{hero.name} a infligé {max(1, hero.attack - monster.defense)} dégat(s) au monstre !")
             if not monster.is_alive():
                 return True
     return False
@@ -62,7 +62,7 @@ def monster_turn(team,monster):
     if monster.is_alive():
         target = monster_target(get_alive_heroes(team))
         monster.deal_damage(target)
-        print(f"{monster.name} a infligé {max(1, monster.attack - target.defense)} dégat(s) à {target.name} !")
+        print(f"\n{monster.name} a infligé {max(1, monster.attack - target.defense)} dégat(s) à {target.name} !")
         if not target.is_alive():
             return target
     return None

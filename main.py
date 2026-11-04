@@ -7,15 +7,15 @@ def jeu():
     add_to_leaderboard(nickname, count, team)
 
 def main():
-    menu_choice = menu()
-    if menu_choice == 1:
-        jeu()
-    elif menu_choice == 2:
-        print("Voici le classemeent : ")
-        show_leaderboard()
-        return
-    else :
-        print("Au revoir !")
-        return
+    while True :
+        menu_choice = menu()
+        if menu_choice == 1:
+            jeu()
+        elif menu_choice == 2:
+            print("\nVoici le classement : ")
+            show_leaderboard()
+        else :
+            print("\nAu revoir !")
+            break
 
 main()
