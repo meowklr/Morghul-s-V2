@@ -20,8 +20,8 @@ def waves(team):
             print(f"Bravo, tu as surmonté la vague {wave_counter} !")
             wave_counter += 1
         else :
-            print(f"Toute ton équipe est morte, tu as survécu à {wave_counter} vague(s)...")
-    return wave_counter
+            print(f"Toute ton équipe est morte, tu as survécu à {wave_counter - 1} vague(s)...")
+    return wave_counter - 1
 
 
 def round(team, picked_monster):

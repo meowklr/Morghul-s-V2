@@ -44,20 +44,20 @@ def select_heroes(team_lenght = 3):
     heroes = get_all_heroes()
 
     choices = []
-    for hero in heroes:
-            choices.append(Choice(
-                        value=hero,
-                        name=f"{hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}"
-                    ))
-    selected_heroes = inquirer.checkbox(
-        message = "Voici la listee des héros :",
-        choices = choices,
-        pointer = "> ",
+    for i, hero in enumerate(heroes):
+        choices.append(Choice(
+            value=i,
+            name=f"{hero.name} - ATK: {hero.attack}, DEF: {hero.defense}, HP: {hero.hp}"
+        ))
+    selected_indexes = inquirer.checkbox(
+        message="Voici la liste des héros :",
+        choices=choices,
+        pointer="> ",
         validate=lambda result: len(result) == team_lenght,
         invalid_message=f"Tu dois sélectionner exactement {team_lenght} héros.",
     ).execute()
+    return [heroes[i] for i in selected_indexes]
 
-    return selected_heroes
 
 def print_team(team):
     table = Table(
@@ -72,14 +72,12 @@ def print_team(team):
     table.add_column("HP", justify="center", style="green")
 
     for i, hero in enumerate(team, 1):
-
-        print(hero)
         table.add_row(
             str(i),
             hero.name,
             str(hero.attack),
             str(hero.defense),
-            f"{hero.hp}/{getattr(hero, 'max_hp', hero.hp)}"
+            f"{hero.hp}/{getattr(hero, 'max_hp', hero.hp)}",
         )
     console.print()
     console.print(table)

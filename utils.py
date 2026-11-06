@@ -85,7 +85,7 @@ def get_alive_heroes(team):
 
 
 def is_team_alive(team): 
-    return bool(team)
+    return bool(get_alive_heroes(team))
 
 #?==================================== UTILITAIRES POUR LE MONSTRE ====================================
 
